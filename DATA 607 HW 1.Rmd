@@ -1,9 +1,10 @@
 ---
 title: "607 Homework 1"
 author: "Victoria McEleney"
-date: "`r Sys.Date()`""
-output: github_document
+date: "`r Sys.Date()`"
+output: html_document
 ---
+
 #Candy Power Ranking
 
 To figure out what Halloween candy people prefer dozens of fun-sized candy varieties were pitted against one another.  8,371 different IP addresses voted on about 269,000 randomly generated matchups.
@@ -31,13 +32,11 @@ candy %>%
   select(competitorname, chocolate, winpercent) %>% 
   arrange(desc(winpercent))
 ```
-
 #Plot colored by chocolate
 
-```{r}
+```{r fig2, fig.height = 5, fig.width = 15, fig.align = "center"}
 ggplot(candy) +
 geom_point(mapping = aes(x = competitorname, y = winpercent, color = chocolate)) +
 labs(title = "Chocolate vs. Non-chocolate") +
 theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
-
