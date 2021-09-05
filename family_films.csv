@@ -1,0 +1,7 @@
+reviewer,age,"IFNULL(`cruella`, 'N/A')","IFNULL(`paw_patrol`, 'N/A')","IFNULL(`luca`, 'N/A')","IFNULL(`raya`, 'N/A')","IFNULL(`the_mitchells_vs_the_machines`, 'N/A')","IFNULL(`big_hero_6`, 'N/A')"
+1,6,4,5,5,5,4,5
+2,3,2,5,5,4,3,5
+3,10,1,2,4,4,4,2
+4,53,4,2,4,3,3,3
+5,43,5,2,5,4,3,4
+6,71,4,N/A,3,N/A,N/A,N/A
