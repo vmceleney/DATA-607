@@ -1,7 +1,7 @@
-reviewer,age,cruella,paw_patrol,luca,raya,the_mitchells_vs_the_machines,big_hero_6
+reviewer,age,"IFNULL(`cruella`, 'NA')","IFNULL(`paw_patrol`, 'NA')","IFNULL(`luca`, 'NA')","IFNULL(`raya`, 'NA')","IFNULL(`the_mitchells_vs_the_machines`, 'NA')","IFNULL(`big_hero_6`, 'NA')"
 1,6,4,5,5,5,4,5
 2,3,2,5,5,4,3,5
 3,10,1,2,4,4,4,2
 4,53,4,2,4,3,3,3
 5,43,5,2,5,4,3,4
-6,71,4,NULL,3,NULL,NULL,NULL
+6,71,4,NA,3,NA,NA,NA
