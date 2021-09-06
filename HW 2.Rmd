@@ -1,0 +1,82 @@
+---
+title: "607 Homework 2 - Family Films"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_document:
+    theme: cosmo
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Six recent family movies were chosen. Five family members were asked to rate each of these movies that they have seen on a scale of 1 to 5. Results were stored in a MySQL database using MySQL Workbench. The SQL database was loaded into an R dataframe and analyzed.
+
+## Create a database using MySQL:
+
+CREATE TABLE `family_films`.`family_films` (
+  `reviewer` INT NOT NULL AUTO_INCREMENT,
+  `age` INT NOT NULL,
+  `cruella` INT NULL,
+  `paw_patrol` INT NULL,
+  `luca` INT NULL,
+  `raya` INT NULL,
+  `the_mitchells_vs_the_machines` INT NULL,
+  `big_hero_6` INT NULL,
+  PRIMARY KEY (`reviewer`));
+  
+INSERT INTO `family_films`.`family_films` (`reviewer`, `age`, `cruella`, `paw_patrol`, `luca`, `raya`, `the_mitchells_vs_the_machines`, `big_hero_6`) VALUES ('1', '6', '4', '5', '5', '5', '4', '5');
+INSERT INTO `family_films`.`family_films` (`reviewer`, `age`, `cruella`, `paw_patrol`, `luca`, `raya`, `the_mitchells_vs_the_machines`, `big_hero_6`) VALUES ('2', '3', '2', '5', '5', '4', '3', '5');
+INSERT INTO `family_films`.`family_films` (`reviewer`, `age`, `cruella`, `paw_patrol`, `luca`, `raya`, `the_mitchells_vs_the_machines`, `big_hero_6`) VALUES ('3', '10', '1', '2', '4', '4', '4', '2');
+INSERT INTO `family_films`.`family_films` (`reviewer`, `age`, `cruella`, `paw_patrol`, `luca`, `raya`, `the_mitchells_vs_the_machines`, `big_hero_6`) VALUES ('4', '53', '4', '2', '4', '3', '3', '3');
+INSERT INTO `family_films`.`family_films` (`reviewer`, `age`, `cruella`, `paw_patrol`, `luca`, `raya`, `the_mitchells_vs_the_machines`, `big_hero_6`) VALUES ('5', '43', '5', '2', '5', '4', '3', '4');
+INSERT INTO `family_films`.`family_films` (`reviewer`, `age`, `cruella`, `luca`) VALUES ('6', '71', '4', '3');
+
+#Change NULLs to NA and export to .csv in MySQL Workbench:
+
+SELECT `reviewer`,`age`, IFNULL(`cruella`, 'NA'), IFNULL(`paw_patrol`, 'NA'), IFNULL(`luca`, 'NA'), IFNULL(`raya`, 'NA'), IFNULL(`the_mitchells_vs_the_machines`, 'NA'), IFNULL(`big_hero_6`, 'NA') FROM `family_films`.`family_films`
+
+Press export button, choose folder, and save to family.films.csv
+
+#Upload .csv to Github:
+
+https://raw.githubusercontent.com/vmceleney/DATA-607/main/family_films.csv
+
+#Open RStudio and Load libraries:
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(dplyr)
+```
+
+#Load the .csv into a RStudio data.frame:
+
+```{r}
+films <- read.csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/family_films.csv", sep=",")
+films
+```
+
+#Rename columns
+
+```{r}
+colnames(films) <- c("reviewer", "age", "cruella", "paw_patrol", "luca", "raya", "the_mitchells", "big_hero")
+films
+```
+
+#Filter fields, transpose, and add column names:
+
+```{r}
+films <- select(films, cruella:big_hero)
+t_films <- t(films)
+colnames(t_films) <- c("A", "B", "C", "D", "E", "F")
+t_films
+```
+
+#What is the mean rating of each film? (ignore NA)
+
+```{r}
+rowMeans(t_films, na.rm = TRUE)
+```
