@@ -1,0 +1,82 @@
+---
+title: "Week3 - Character Manipulation and Date Processing"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Tibble operations
+library(tidyverse)
+
+# For data cleanup
+library(stringr)
+
+```
+
+#### 1. & 2. Answered by group member Cliff Lee: 
+
+<https://github.com/cliftonleesps/607_acq_mgt/blob/main/week3/homework3.Rmd>
+
+#### 3. Describe, in words, what these expressions will match:
+
+
+##### (.)\1\1 
+
+will match any 3 consecutive characters (ex: CCC)
+
+
+##### "(.)(.)\\2\\1" 
+
+will match any 2 characters followed by the same 2 captured characters in reverse order (ex: eppe)
+
+
+##### (..)\1 
+
+will match any 2 characters followed by the same 2 characters (ex: anan)
+
+
+##### "(.).\\1.\\1" 
+
+will match any character followed by any character, followed by the 1st captured character, followed by any character apart from 1st captured character, followed by the 1st captured character (ex: anana, anama)
+
+
+##### "(.)(.)(.).*\\3\\2\\1" 
+
+will match any 3 characters, followed by any or no characters, followed by the first captured 3 characters in reverse order (ex: aprrpa, apricotrpa)
+
+
+
+#### 4. Construct regular expressions to match words that:
+
+##### Start and end with the same character.
+
+
+```{r}
+
+words[str_detect(words, "^(.)((.*\\1$)|\\1?$)")]
+```
+
+
+##### Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)
+
+
+```{r}
+str_view(words, "([a-z][a-z]).*\\1", match = TRUE)
+
+```
+
+
+##### Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)
+
+
+```{r}
+str_view(words, "([a-z]).*\\1.*\\1", match = TRUE)
+
+```
+
