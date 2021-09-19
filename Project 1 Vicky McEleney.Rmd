@@ -1,0 +1,168 @@
+---
+title: "607 Project 1"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Given a text file with chess tournament results where the information has some structure the 
+goal is to create an R Markdown file that generates a .CSV file with the following information for all of the players:
+
+Player’s Name, Player’s State, Total Number of Points, Player’s Pre-Rating, and Average Pre-Rating of Opponents.
+
+## Load libraries
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(stringr)
+library(tidyverse)
+```
+
+## Read text file into R
+
+```{r}
+tournamentinfo <- read_delim("https://raw.githubusercontent.com/vmceleney/DATA-607/main/tournamentinfo.txt", 
+    delim = "|", escape_double = FALSE, col_types = cols(...11 = col_skip()), 
+    na = "NA", trim_ws = TRUE, skip = 2)
+View(tournamentinfo)
+tournamentinfo
+```
+
+## Remove rows with "--"
+
+```{r}
+tournamentinfo <- filter(tournamentinfo, !str_detect(Num, "--"))
+```
+
+## Extract odd & even rows into separate tables by adding odd row indicator
+
+```{r}
+row_odd <- seq_len(nrow(tournamentinfo)) %% 2
+tournamentinfo_odd <- tournamentinfo[row_odd == 1, ]
+tournamentinfo_odd
+tournamentinfo_even <- tournamentinfo[row_odd == 0, ]
+tournamentinfo_even
+```
+## Rename columns
+
+```{r}
+colnames(tournamentinfo_odd) = c("Number", "Name", "Points", "Round1", "Round2", "Round3", "Round4", "Round5", "Round6", "Round7")
+tournamentinfo_odd
+colnames(tournamentinfo_even) = c("State", "Pre_Rating", "Points", "Round1", "Round2", "Round3", "Round4", "Round5", "Round6", "Round7")
+tournamentinfo_even
+```
+
+## Bind & relocate necessary columns from tournamentinfo_odd & tournamentinfo_even
+
+```{r}
+tournamentinfo <- bind_cols(tournamentinfo_odd, select(tournamentinfo_even, c("State", "Pre_Rating")))
+tournamentinfo <- relocate(tournamentinfo, State, .after = Name)
+tournamentinfo <- relocate(tournamentinfo, Pre_Rating, .after = State)
+tournamentinfo
+```
+
+## Extract Player's Pre-Rating
+
+```{r}
+tournamentinfo$Pre_Rating <- substring(tournamentinfo$Pre_Rating, regexpr(":", tournamentinfo$Pre_Rating) + 2)
+tournamentinfo$Pre_Rating <- str_sub(tournamentinfo$Pre_Rating, 1, 4)
+tournamentinfo$Pre_Rating <- as.numeric(tournamentinfo$Pre_Rating)
+tournamentinfo$Pre_Rating
+```
+## Extract Opponent Numbers for each Round
+
+```{r}
+tournamentinfo$Round1 <- as.numeric(str_sub(tournamentinfo$Round1, 4, 5))
+tournamentinfo$Round2 <- as.numeric(str_sub(tournamentinfo$Round2, 4, 5))
+tournamentinfo$Round3 <- as.numeric(str_sub(tournamentinfo$Round3, 4, 5))
+tournamentinfo$Round4 <- as.numeric(str_sub(tournamentinfo$Round4, 4, 5))
+tournamentinfo$Round5 <- as.numeric(str_sub(tournamentinfo$Round5, 4, 5))
+tournamentinfo$Round6 <- as.numeric(str_sub(tournamentinfo$Round6, 4, 5))
+tournamentinfo$Round7 <- as.numeric(str_sub(tournamentinfo$Round7, 4, 5))
+tournamentinfo
+```
+
+## Change match results from wide to long format
+```{r}
+match <- pivot_longer(tournamentinfo, cols = starts_with("Rou"), names_to ="Round",  
+             values_to = "Opponent")
+match
+```
+
+## Convert key join fields to same format
+```{r}
+tournamentinfo$Number <- as.numeric(tournamentinfo$Number)
+match$Opponent <- as.numeric(match$Opponent)
+```
+
+## Join Opponent Pre-Rating
+```{r}
+join <- inner_join(match, tournamentinfo, by = c("Opponent" = "Number"), suffix = c("Player", "Opponent"))
+join
+```
+
+## Calculate number of rounds played by each player needed to calculated Expected Results
+```{r}
+tournamentinfo$PlayedRoundCount <- rowSums (!is.na(tournamentinfo[6:12]))
+```
+
+## calculate Opponent Average Pre-Rating using dplyr functions & sort
+```{r}
+Pre_RatingOpponent_avg <-  
+  join %>%  
+  group_by(Number) %>%  
+  summarize(avg = round(mean(Pre_RatingOpponent)))
+Pre_RatingOpponent_avg$Number <- as.numeric(Pre_RatingOpponent_avg$Number)
+Pre_RatingOpponent_avg <- arrange(Pre_RatingOpponent_avg, Number)
+```
+
+## Join Opponent Average Pre-Rating
+```{r}
+tournament_summary <- inner_join(tournamentinfo, Pre_RatingOpponent_avg, by = c("Number" = "Number"))
+```
+
+## Rename Headers, delete round columns
+```{r}
+tournament_summary <- rename(tournament_summary, Player_Pre_Rating = Pre_Rating, Opponent_Pre_Rating_avg = avg)
+tournament_summary <- select(tournament_summary, -starts_with("R"))
+tournament_summary
+```
+
+## Calculate Expected Result
+```{r}
+tournament_summary$Points <- as.numeric(tournament_summary$Points)
+tournament_summary <- tournament_summary %>% 
+  mutate(WinProbability = 1 / (1 + 10 ^ ((Opponent_Pre_Rating_avg - Player_Pre_Rating) / 400)))
+tournament_summary <- tournament_summary %>%  
+  mutate(ExpectedResult = WinProbability * PlayedRoundCount)
+tournament_summary <- tournament_summary %>%  
+  mutate(Difference = Points - ExpectedResult)
+tournament_summary <- arrange(tournament_summary, desc(Difference))
+tournament_summary
+```
+
+## ggplot of difference between Actual Points and Expected Result
+
+```{r}
+ggplot(data = tournament_summary, aes(x = Number, y = Difference)) +
+  geom_point()
+```
+
+## Conclusion
+*Player number 3 ADITYA BAJAJ scored the most points relative to his or her expected result = 4.16676323 more than expected.*
+
+## Export to .csv
+```{r}
+write.csv(tournament_summary, file = "tournament_summary_VM.csv", row.names = FALSE)
+```
