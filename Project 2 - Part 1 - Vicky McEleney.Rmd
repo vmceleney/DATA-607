@@ -1,0 +1,188 @@
+---
+title: "607 Project 2 - Part 1"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Practice preparing different datasets for downstream analysis work. Choose any three of the “wide” datasets identified in the Week 5 Discussion items. For each of the three chosen datasets:
+
+(1) Create a .CSV file that includes all of the information included in the dataset. 
+
+(2) Read the information from your .CSV file into R, and use tidyr and dplyr as needed to tidy and transform your data.
+
+(3) Perform the analysis requested in the discussion item.
+
+### There are two tables here with the cases each year in a separate column:
+
+### (1) West Nile virus disease cases reported to CDC by state of residence, 1999-2019
+
+### (2) West Nile virus neuroinvasive disease cases reported to CDC by state of residence, 1999-2019
+
+### Pivot the year columns longer & combine data from the two tables into one. Calculate the totals, means, medians, & standard deviation per state & per year. Calculate the percent of neuroinvasive disease cases out of virus cases (per year / per state).
+
+## Load libraries
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(stringr)
+library(tidyverse)
+```
+
+## Download .pdfs, convert to .txt, open in Excel & save as .csv files.
+## Read .csv files into R:
+```{r}
+West_Nile_cases <- read_csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/West-Nile-virus-disease-cases-by-state_1999-2019-P.csv", 
+    col_types = cols(`1999` = col_number(), 
+        `2000` = col_number(), `2001` = col_number(), 
+        `2002` = col_number(), `2003` = col_number(), 
+        `2004` = col_number(), `2005` = col_number(), 
+        `2006` = col_number(), `2007` = col_number(), 
+        `2008` = col_number(), `2009` = col_number()), 
+    skip = 5)
+West_Nile_cases
+
+West_Nile_neuroinvasive_cases <- read_csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/West-Nile-virus-neuroinvasive-disease-cases-by-state_1999-2019-P.csv", 
+    col_types = cols(`1999` = col_number(), 
+        `2000` = col_number(), `2001` = col_number(), 
+        `2002` = col_number(), `2003` = col_number(), 
+        `2004` = col_number(), `2005` = col_number(), 
+        `2006` = col_number(), `2007` = col_number(), 
+        `2008` = col_number(), `2009` = col_number()), 
+    skip = 5)
+West_Nile_neuroinvasive_cases
+```
+
+## Split rows for 1999 - 2009 & 2010 - 2019:
+```{r}
+West_Nile_cases_1999_2009 <- slice(West_Nile_cases, 1:52)
+West_Nile_cases_2010_2019 <- slice(West_Nile_cases, 64:115)
+West_Nile_neuroinvasive_cases_1999_2009 <- slice(West_Nile_neuroinvasive_cases, 1:52)
+West_Nile_neuroinvasive_cases_2010_2019 <- slice(West_Nile_neuroinvasive_cases, 61:113)
+West_Nile_cases_1999_2009
+West_Nile_cases_2010_2019
+West_Nile_neuroinvasive_cases_1999_2009
+West_Nile_neuroinvasive_cases_2010_2019
+```
+
+## Delete empty columns:
+```{r}
+West_Nile_cases_2010_2019 <- select(West_Nile_cases_2010_2019, 1:11)
+West_Nile_cases_2010_2019
+West_Nile_neuroinvasive_cases_2010_2019 <- select(West_Nile_neuroinvasive_cases_2010_2019, 1:11)
+West_Nile_neuroinvasive_cases_2010_2019
+```
+
+# Rename columns:
+```{r}
+West_Nile_cases_2010_2019 <- rename(West_Nile_cases_2010_2019,  
+                                                  '2010' = '1999',  
+                                                  '2011' = '2000',  
+                                                  '2012' = '2001',  
+                                                  '2013' = '2002',  
+                                                  '2014' = '2003',  
+                                                  '2015' = '2004',  
+                                                  '2016' = '2005',  
+                                                  '2017' = '2006',  
+                                                  '2018' = '2007',  
+                                                  '2019' = '2008')
+West_Nile_cases_2010_2019
+
+West_Nile_neuroinvasive_cases_2010_2019 <- rename(West_Nile_neuroinvasive_cases_2010_2019,  
+                                                  '2010' = '1999',  
+                                                  '2011' = '2000',  
+                                                  '2012' = '2001',  
+                                                  '2013' = '2002',  
+                                                  '2014' = '2003',  
+                                                  '2015' = '2004',  
+                                                  '2016' = '2005',  
+                                                  '2017' = '2006',  
+                                                  '2018' = '2007',  
+                                                  '2019' = '2008')
+
+West_Nile_neuroinvasive_cases_2010_2019 <- slice(West_Nile_neuroinvasive_cases_2010_2019, 2:53)
+West_Nile_neuroinvasive_cases_2010_2019
+```
+
+# Merge data for years 1999 - 2019
+```{r}
+West_Nile_cases <- inner_join(West_Nile_cases_1999_2009, West_Nile_cases_2010_2019, by = 'State')
+West_Nile_cases
+West_Nile_neuroinvasive_cases <- inner_join(West_Nile_neuroinvasive_cases_1999_2009, West_Nile_neuroinvasive_cases_2010_2019, by = 'State')
+West_Nile_neuroinvasive_cases
+```
+
+# Pivot to longer format:
+```{r}
+West_Nile_cases <- pivot_longer(West_Nile_cases, cols = 2:22, names_to ="year",
+values_to = "cases")
+West_Nile_cases
+
+West_Nile_neuroinvasive_cases <- pivot_longer(West_Nile_neuroinvasive_cases, cols = 2:22, names_to ="year",
+values_to = "cases")
+West_Nile_neuroinvasive_cases
+```
+
+# Update "Dist. of Columbia" to "Dist of Columbia' to enable join:
+```{r}
+West_Nile_cases$State <- str_replace_all(West_Nile_cases$State, "Dist. of Columbia", "Dist of Columbia")
+```
+
+# Merge virus case data with neuroinvasive case data:
+```{r}
+West_Nile <- full_join(West_Nile_cases, West_Nile_neuroinvasive_cases, by =  c('State', 'year'), suffix = c("", "_ni"))
+West_Nile
+```
+
+## What is the sum, mean, median, standard deviation for each state? for each year?
+```{r}
+West_Nile_cases_state_summary <- West_Nile %>%
+  group_by(State) %>%
+  summarise(sum(cases), sum(cases_ni), mean(cases), mean(cases_ni), median(cases), median(cases_ni), sd(cases), sd(cases_ni))
+West_Nile_cases_state_summary
+  
+West_Nile_cases_year_summary <- West_Nile %>%
+  group_by(year) %>%
+  summarise(sum(cases), sum(cases_ni), mean(cases), mean(cases_ni), median(cases), median(cases_ni), sd(cases), sd(cases_ni))
+West_Nile_cases_year_summary
+```
+
+## Do my data totals sync up?
+```{r}
+sum(West_Nile_cases_state_summary$`sum(cases)`)
+sum(West_Nile_cases_year_summary$`sum(cases)`)
+sum(West_Nile_cases_state_summary$`sum(cases_ni)`)
+sum(West_Nile_cases_year_summary$`sum(cases_ni)`)
+```
+
+## What is the proportion of neuroinvasive to virus cases for each state? for each year?
+```{r}
+West_Nile_cases_state_summary <- West_Nile_cases_state_summary %>%
+  mutate(prop = `sum(cases_ni)` / `sum(cases)`, .after = `sum(cases_ni)`)
+West_Nile_cases_state_summary
+  
+West_Nile_cases_year_summary <- West_Nile_cases_year_summary %>%
+  mutate(prop = `sum(cases_ni)` / `sum(cases)`, .after = `sum(cases_ni)`)
+West_Nile_cases_year_summary
+```
+
+### Which years had the highest proportion of neuroinvasive to virus cases?  Which years have the lowest? 
+## Plot proportion of neuroinvasive per year:
+```{r}
+ggplot(West_Nile_cases_year_summary, aes(x= year, y = prop)) +  
+  geom_point()
+```
+
+## Conclusion 
+1999 - 2001 had the highest proportion of neuroinvasive to virus cases greater than 90%.  Virus detection has likely evolved since 2001 and possibly non-neuroinvasive cases were undiagnosed before 2002.

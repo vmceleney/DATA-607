@@ -1,0 +1,80 @@
+---
+title: "607 Project 2 - Part 2"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Practice preparing different datasets for downstream analysis work. Choose any three of the “wide” datasets identified in the Week 5 Discussion items. For each of the three chosen datasets:
+
+(1) Create a .CSV file that includes all of the information included in the dataset. 
+
+(2) Read the information from your .CSV file into R, and use tidyr and dplyr as needed to tidy and transform your data.
+
+(3) Perform the analysis requested in the discussion item.
+
+### This table contains the running times for four runners, taken immediately before starting a new training regime and then for three months thereafter.  Visualize the progress of these runners after tidying the data. Find who improved the most from the training program.
+
+## Load libraries
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(stringr)
+library(tidyverse)
+```
+
+## Store data in Excel, save as .csv, and read .csv file into R:
+```{r}
+running_times <- read_csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/running_times.csv", 
+    skip = 2)
+running_times
+```
+
+# Rename columns:
+```{r}
+running_times <- rename(running_times, `0` = `Month 0`, `1` = `Month 1` , `2` = `Month 2`, `3` = `Month 3`)
+```
+
+## Which runner's time improved the most?
+## calculate improvement rate:
+```{r}
+running_times <- running_times %>%  
+  mutate(improvement_rate = 1 - (`3` / `0`))
+running_times
+```
+### Joana's run time decreased / improved the most at 4.08%
+
+## Reshape data longer:
+```{r}
+running_times_longer <- pivot_longer(running_times, cols = 2:5, names_to ="Month",
+values_to = "times")
+running_times_longer
+```
+
+## Convert Month to numeric:
+```{r}
+running_times_longer$Month <- as.numeric(running_times_longer$Month)
+```
+
+## What else can we find out by visualizing data?
+## Plot data:
+```{r}
+ggplot(running_times_longer, aes(Athlete, times, color = Month)) +  
+  geom_point(group = running_times_longer$Month)
+```
+
+### We can see from the scatter plot that all runners times decreased after 3 months of the training regime.  
+### Debi's & Sukhveer's time improved the most between Month 2 and 3. 
+### Joana's time improved the most between Month 0 and 1.
+### Kerol's time increased slighly between Month 0 and 1. Kerol's time decrease between Month 1 and 2 and Month 2 and 3 is evenly distibuted.

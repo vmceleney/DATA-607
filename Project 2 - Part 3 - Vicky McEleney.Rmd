@@ -1,0 +1,129 @@
+---
+title: "607 Project 2 - Part 3"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Practice preparing different datasets for downstream analysis work. Choose any three of the “wide” datasets identified in the Week 5 Discussion items. For each of the three chosen datasets:
+
+(1) Create a .CSV file that includes all of the information included in the dataset. 
+
+(2) Read the information from your .CSV file into R, and use tidyr and dplyr as needed to tidy and transform your data.
+
+(3) Perform the analysis requested in the discussion item.
+
+### https://data.worldbank.org/indicator/SH.DYN.MORT
+This dataset includes child under 5 mortality rates per 1,000 live births for 266 countries from 1950 to 2019. The data is structured in wide format, where the column names include the country, and each year from 1950 to 2019. Values are the corresponding child mortality rates for that country, and that year. Restructure this dataset into long format.
+
+Analyze mortality rates for children under 5 over time, by country. Monitor spikes for mortality rate over time to identify patterns or factors leading to child mortality.
+
+## Load libraries
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(stringr)
+library(tidyverse)
+```
+
+## Download .csvs, upload to Github, and read .csv files into R:
+```{r}
+u5mr <- read_csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/API_SH.DYN.MORT_DS2_en_csv_v2_3012069.csv", 
+    col_types = cols(`2020` = col_skip()), skip = 4)
+u5mr
+
+Metadata_Country <- read_csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/Metadata_Country_API_SH.DYN.MORT_DS2_en_csv_v2_3012069.csv", 
+    col_types = cols(...6 = col_skip()))
+Metadata_Country
+```
+
+## Delete empty last column:
+```{r}
+u5mr <- select(u5mr, -3, -4, -65)
+View(u5mr)
+```
+
+## Merge Country Metadata into Mortality data:
+```{r}
+u5mr <- full_join(u5mr, Metadata_Country, by = "Country Code", 
+suffix = c("", "Meta"))
+u5mr
+```
+
+## Reshape data longer, dropping NAs:
+```{r}
+u5mr_long <- pivot_longer(u5mr, cols = 3:62, names_to ="year",
+values_to = "Mortality_rate", values_drop_na = TRUE)
+u5mr_long
+```
+## Filter data into select country sets:
+```{r}
+usa <- filter(u5mr_long, `Country Code` == "USA")
+india <- filter(u5mr_long, `Country Code` == "IND")
+china <- filter(u5mr_long, `Country Code` == "CHN")
+ireland <- filter(u5mr_long, `Country Code` == "IRL")
+brazil <- filter(u5mr_long, `Country Code` == "BRA")
+south_africa <- filter(u5mr_long, `Country Code` == "ZAF")
+```
+
+
+
+## Plot mortality rate of select countries over time:
+```{r}
+ggplot(usa, aes(year, Mortality_rate)) +  
+  geom_point()+
+labs(title = "Under Age 5 Mortality in United States Over Time") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(india, aes(year, Mortality_rate)) +  
+  geom_point()+
+labs(title = "Under Age 5 Mortality in India Over Time") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(china, aes(year, Mortality_rate)) +  
+  geom_point()+
+labs(title = "Under Age 5 Mortality in China Over Time") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(ireland, aes(year, Mortality_rate)) +  
+  geom_point()+
+labs(title = "Under Age 5 Mortality in Ireland Over Time") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(brazil, aes(year, Mortality_rate)) +  
+  geom_point()+
+labs(title = "Under Age 5 Mortality in Brazil Over Time") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(south_africa, aes(year, Mortality_rate)) +  
+  geom_point()+
+labs(title = "Under Age 5 Mortality in South Africa Over Time") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+### There is an overall trend of child mortality rates falling over time in most of these select countries.
+### South Africa has an increasing trend in mortality rates from 1993 - 2006.  What happened?  Research points to this being due to AIDS deaths.
+
+
+## How do child mortality rates compare in various Country Income Groups?
+```{r}
+ggplot(u5mr_long, aes(year, Mortality_rate, color = IncomeGroup )) +  
+  geom_point()+
+labs(title = "Under Age 5 Mortality Over Time") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+### Countries with low income tend to have higher child mortality rates, while countries with high income tend to have lower child mortality rates.
+
+### Which country is that Lower middle income outlier with mortality rate over 200 in 2010?  That is Haiti which suffered a catastrophic earthquake in 2010.
