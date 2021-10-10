@@ -1,9 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <root>
-  <row><[>
-  </[>
-  <FIELD2>{</FIELD2>
-</row>
-<row><[>title
-</[>
-<FIELD2>The Discipline Book: How to Have a Better-Behaved Child From Birth to Age Ten</FIELD2>undefined</row>undefined<row><[>authorsundefined</[>undefined<FIELD2>Martha Sears RN, William Sears MD FRCP</FIELD2>undefined</row>undefined<row><[>attribute1undefined</[>undefined<FIELD2>attachment parenting techniques</FIELD2>undefined</row>undefined<row><[>attribute2undefined</[>undefined<FIELD2>focus on preventing behavior problems</FIELD2>undefined</row>undefined<row><[>attribute3undefined</[>undefined<FIELD2>touches on sibling rivalry</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>},</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>{</FIELD2>undefined</row>undefined<row><[>titleundefined</[>undefined<FIELD2>How To Talk So Kids Will Listen and Listen So Kids Will Talk</FIELD2>undefined</row>undefined<row><[>authorsundefined</[>undefined<FIELD2>Adele Faber</FIELD2>undefined</row>undefined<row><[>attribute1undefined</[>undefined<FIELD2>focus on communication between parents and children</FIELD2>undefined</row>undefined<row><[>attribute2undefined</[>undefined<FIELD2>coined the ultimate parenting bible by The Boston Globe</FIELD2>undefined</row>undefined<row><[>attribute3undefined</[>undefined<FIELD2>has techniques to resolve family conflicts peacefully</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>},</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>{</FIELD2>undefined</row>undefined<row><[>titleundefined</[>undefined<FIELD2>Parenting from the Inside Out: How a Deeper Self-Understanding Can Help You Raise Children Who Thrive</FIELD2>undefined</row>undefined<row><[>authorsundefined</[>undefined<FIELD2>Daniel J. Siegel, Mary Hartzell</FIELD2>undefined</row>undefined<row><[>attribute1undefined</[>undefined<FIELD2>focus on foundations for loving and secure relationships</FIELD2>undefined</row>undefined<row><[>attribute2undefined</[>undefined<FIELD2>translates complex neuroscientific and psychologolcal matters into lay strategies</FIELD2>undefined</row>undefined<row><[>attribute3undefined</[>undefined<FIELD2>helps the reader to be the kind of parent they want to be</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>}</FIELD2>undefined</row>undefined<row><[>]undefined</[>undefined<FIELD2></FIELD2>undefined</row>undefined</root>
+<row -="" FIELD2="{"></row>
+<row -="title" FIELD2="The Discipline Book: How to Have a Better-Behaved Child From Birth to Age Ten"></row>
+<row -="authors" FIELD2="Martha Sears RN, William Sears MD FRCP"></row>
+<row -="attribute1" FIELD2="attachment parenting techniques"></row>
+<row -="attribute2" FIELD2="focus on preventing behavior problems"></row>
+<row -="attribute3" FIELD2="touches on sibling rivalry"></row>
+<row -="" FIELD2="},"></row>
+<row -="" FIELD2="{"></row>
+<row -="title" FIELD2="How To Talk So Kids Will Listen and Listen So Kids Will Talk"></row>
+<row -="authors" FIELD2="Adele Faber"></row>
+<row -="attribute1" FIELD2="focus on communication between parents and children"></row>
+<row -="attribute2" FIELD2="coined the ultimate �parenting bible� by The Boston Globe"></row>
+<row -="attribute3" FIELD2="has techniques to resolve family conflicts peacefully"></row>
+<row -="" FIELD2="},"></row>
+<row -="" FIELD2="{"></row>
+<row -="title" FIELD2="Parenting from the Inside Out: How a Deeper Self-Understanding Can Help You Raise Children Who Thrive"></row>
+<row -="authors" FIELD2="Daniel J. Siegel, Mary Hartzell"></row>
+<row -="attribute1" FIELD2="focus on foundations for loving and secure relationships"></row>
+<row -="attribute2" FIELD2="translates complex neuroscientific and psychologolcal matters into lay strategies"></row>
+<row -="attribute3" FIELD2="helps the reader to be the kind of parent they want to be"></row>
+<row -="" FIELD2="}"></row>
+<row -="]" FIELD2=""></row>
+</root>
