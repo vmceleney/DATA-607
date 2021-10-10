@@ -1,87 +1,9 @@
-<?xml version="1.0"?>
-<?mso-application progid="Excel.Sheet"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:o="urn:schemas-microsoft-com:office:office"
- xmlns:x="urn:schemas-microsoft-com:office:excel"
- xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:html="http://www.w3.org/TR/REC-html40">
- <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
-  <Author>Victoria</Author>
-  <LastAuthor>Victoria</LastAuthor>
-  <Created>2021-10-10T15:22:35Z</Created>
-  <LastSaved>2021-10-10T15:45:08Z</LastSaved>
-  <Version>16.00</Version>
- </DocumentProperties>
- <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
-  <AllowPNG/>
- </OfficeDocumentSettings>
- <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>3810</WindowHeight>
-  <WindowWidth>15345</WindowWidth>
-  <WindowTopX>32767</WindowTopX>
-  <WindowTopY>32767</WindowTopY>
-  <ProtectStructure>False</ProtectStructure>
-  <ProtectWindows>False</ProtectWindows>
- </ExcelWorkbook>
- <Styles>
-  <Style ss:ID="Default" ss:Name="Normal">
-   <Alignment ss:Vertical="Bottom"/>
-   <Borders/>
-   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
-   <Interior/>
-   <NumberFormat/>
-   <Protection/>
-  </Style>
-  <Style ss:ID="s62">
-   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
-  </Style>
- </Styles>
- <Worksheet ss:Name="Sheet1">
-  <Table ss:ExpandedColumnCount="5" ss:ExpandedRowCount="4" x:FullColumns="1"
-   x:FullRows="1" ss:DefaultRowHeight="15">
-   <Column ss:Width="509.25"/>
-   <Column ss:Width="200.25"/>
-   <Column ss:Width="272.25"/>
-   <Column ss:Width="389.25"/>
-   <Column ss:Width="276"/>
-   <Row>
-    <Cell ss:StyleID="s62"><Data ss:Type="String">title</Data></Cell>
-    <Cell><Data ss:Type="String">authors</Data></Cell>
-    <Cell><Data ss:Type="String">attribute1</Data></Cell>
-    <Cell><Data ss:Type="String">attribute2</Data></Cell>
-    <Cell><Data ss:Type="String">attribute3</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">The Discipline Book: How to Have a Better-Behaved Child From Birth to Age Ten</Data></Cell>
-    <Cell><Data ss:Type="String">Martha Sears RN, William Sears MD FRCP</Data></Cell>
-    <Cell><Data ss:Type="String">attachment parenting techniques</Data></Cell>
-    <Cell><Data ss:Type="String">focus on preventing behavior problems</Data></Cell>
-    <Cell><Data ss:Type="String">touches on sibling rivalry</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">How To Talk So Kids Will Listen and Listen So Kids Will Talk</Data></Cell>
-    <Cell><Data ss:Type="String">Adele Faber</Data></Cell>
-    <Cell><Data ss:Type="String">focus on communication between parents and children</Data></Cell>
-    <Cell><Data ss:Type="String">coined the ultimate “parenting bible” by The Boston Globe</Data></Cell>
-    <Cell><Data ss:Type="String">has techniques to resolve family conflicts peacefully</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">Parenting from the Inside Out: How a Deeper Self-Understanding Can Help You Raise Children Who Thrive</Data></Cell>
-    <Cell><Data ss:Type="String">Daniel J. Siegel, Mary Hartzell</Data></Cell>
-    <Cell><Data ss:Type="String">focus on foundations for loving and secure relationships</Data></Cell>
-    <Cell><Data ss:Type="String">translates complex neuroscientific and psychologolcal matters into lay strategies</Data></Cell>
-    <Cell><Data ss:Type="String">helps the reader to be the kind of parent they want to be</Data></Cell>
-   </Row>
-  </Table>
-  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-   <PageSetup>
-    <Header x:Margin="0.3"/>
-    <Footer x:Margin="0.3"/>
-    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
-   </PageSetup>
-   <Selected/>
-   <ProtectObjects>False</ProtectObjects>
-   <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
- </Worksheet>
-</Workbook>
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <row><[>
+  </[>
+  <FIELD2>{</FIELD2>
+</row>
+<row><[>title
+</[>
+<FIELD2>The Discipline Book: How to Have a Better-Behaved Child From Birth to Age Ten</FIELD2>undefined</row>undefined<row><[>authorsundefined</[>undefined<FIELD2>Martha Sears RN, William Sears MD FRCP</FIELD2>undefined</row>undefined<row><[>attribute1undefined</[>undefined<FIELD2>attachment parenting techniques</FIELD2>undefined</row>undefined<row><[>attribute2undefined</[>undefined<FIELD2>focus on preventing behavior problems</FIELD2>undefined</row>undefined<row><[>attribute3undefined</[>undefined<FIELD2>touches on sibling rivalry</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>},</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>{</FIELD2>undefined</row>undefined<row><[>titleundefined</[>undefined<FIELD2>How To Talk So Kids Will Listen and Listen So Kids Will Talk</FIELD2>undefined</row>undefined<row><[>authorsundefined</[>undefined<FIELD2>Adele Faber</FIELD2>undefined</row>undefined<row><[>attribute1undefined</[>undefined<FIELD2>focus on communication between parents and children</FIELD2>undefined</row>undefined<row><[>attribute2undefined</[>undefined<FIELD2>coined the ultimate �parenting bible� by The Boston Globe</FIELD2>undefined</row>undefined<row><[>attribute3undefined</[>undefined<FIELD2>has techniques to resolve family conflicts peacefully</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>},</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>{</FIELD2>undefined</row>undefined<row><[>titleundefined</[>undefined<FIELD2>Parenting from the Inside Out: How a Deeper Self-Understanding Can Help You Raise Children Who Thrive</FIELD2>undefined</row>undefined<row><[>authorsundefined</[>undefined<FIELD2>Daniel J. Siegel, Mary Hartzell</FIELD2>undefined</row>undefined<row><[>attribute1undefined</[>undefined<FIELD2>focus on foundations for loving and secure relationships</FIELD2>undefined</row>undefined<row><[>attribute2undefined</[>undefined<FIELD2>translates complex neuroscientific and psychologolcal matters into lay strategies</FIELD2>undefined</row>undefined<row><[>attribute3undefined</[>undefined<FIELD2>helps the reader to be the kind of parent they want to be</FIELD2>undefined</row>undefined<row><[>undefined</[>undefined<FIELD2>}</FIELD2>undefined</row>undefined<row><[>]undefined</[>undefined<FIELD2></FIELD2>undefined</row>undefined</root>
