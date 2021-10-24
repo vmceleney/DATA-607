@@ -1,0 +1,33 @@
+---
+title: "607 HW 9"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Introduction
+
+The New York Times web site provides a rich set of APIs, as described here: https://developer.nytimes.com/apis
+Sign up for an API key and choose one of the New York Times APIs. construct an interface in R to read in the JSON data, and transform it into an R DataFrame.
+
+## Load libraries
+```{r}
+library(jsonlite)
+library(dplyr)
+```
+
+## Access NYTimes Movie API and query by keywords Kate Beckinsale 
+```{r}
+df <- fromJSON("https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=kate+beckinsale&api-key=t8jjTBB9jh07Izw30VZciBZVqvsFQUV7", flatten = TRUE)
+df <- data.frame(df$results)
+```
+
+## Conclusion
+We have returned the maxiumum 20 rows allowed by accessing the NYTimes Movie API and querying by keywords Kate Beckinsale using the jsonlite library. The display_title column is consistent with movies starring Kate Beckinsale as listed on imdb.com.
+
