@@ -1,0 +1,88 @@
+---
+title: "607 TidyVerse CREATE assignment"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Create an Example.  Using one or more TidyVerse packages, and any dataset from fivethirtyeight.com or Kaggle, create a programming sample “vignette” that demonstrates how to use one or more of the capabilities of the selected TidyVerse package with your selected dataset. 
+
+## Load libraries
+```{r}
+library(readr)
+library(tidyverse)
+```
+
+## Bad teeth, sugar and government health spending
+
+Source: https://www.kaggle.com/angelmm/healthteethsugar
+
+We will focus on Bad teeth per child (12 yr, WHO) and Sugar comsumption per person (g per day, FAO) to demonstrate some basic dplyr Relational Data Mutating Join functions.
+
+## Read .csv's
+```{r}
+library(readr)
+badteeth <- read_csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/badteeth.csv", 
+    col_types = cols(NA..1 = col_skip(), 
+        NA..2 = col_skip(), NA..3 = col_skip()), n_max = 190)
+View(badteeth)
+
+sugar_consumption <- read_csv("https://raw.githubusercontent.com/vmceleney/DATA-607/main/sugar_consumption.csv", 
+    col_types = cols(NA..1 = col_skip()), n_max = 258)
+View(sugar_consumption)
+```
+
+## Rename columns
+```{r}
+colnames(badteeth) <- c("Country", "Weighted_Avg_Badteeth")
+badteeth
+
+colnames(sugar_consumption) <- c("Country", 1961:2004)
+sugar_consumption
+```
+
+## Use a "Mutating Join" to join one table to columns from another, matching values with the rows that they correspond to. Each join retains a different combination of values from the tables.
+
+# full_join(): Join data. Retain all values, all rows. 
+```{r}
+full_join <- full_join(sugar_consumption, badteeth, by = "Country", copy = FALSE, suffix = c(".x", ".y"), keep = FALSE, na_matched = "na")
+full_join
+```
+Note sugar_consumption has 258 rows, badteeth has 190 rows, and full_join has 260 rows (Cote D'Ivoire and Slovak Republic did not merge correctly because of capitalization mismatch).
+
+# left_join(): Join matching values from y to x. Includes all rows in x.
+```{r}
+left_join <- left_join(sugar_consumption, badteeth, by = "Country", copy = FALSE, suffix = c(".x", ".y"), keep = FALSE, na_matched = "na")
+left_join
+```
+Note sugar_consumption has 258 rows and left_join has 258 rows.
+
+# right_join(): Join matching values from x to y. Includes all rows in y.
+```{r}
+right_join <- right_join(sugar_consumption, badteeth, by = "Country", copy = FALSE, suffix = c(".x", ".y"), 2004, keep = FALSE, na_matched = "na")
+right_join
+```
+Note badteeth has 190 rows and right_join has 190 rows.
+
+# inner_join(): Join data. Retain only rows with matches.
+```{r}
+inner_join <- inner_join(sugar_consumption, badteeth, by = "Country", copy = FALSE, suffix = c(".x", ".y"), 2004, keep = FALSE, na_matched = "na")
+inner_join
+```
+Note sugar_consumption has 258 rows, badteeth has 190 rows, and inner_join has 258 rows (Cote D'Ivoire and Slovak Republic do exist in both, but did not merge correctly because of capitalization mismatch).
+
+
+
+
+
+
+
