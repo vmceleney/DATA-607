@@ -1,0 +1,63 @@
+---
+title: "607 HW 12"
+author: "Victoria McEleney"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+## Introduction
+
+Your task is to analyze an existing recommender system that you find interesting.  You should:
+
+Perform a Scenario Design analysis.  Consider whether it makes sense for your selected recommender system to perform scenario design twice, once for the organization (e.g. Amazon.com) and once for the organization's customers.
+
+Attempt to reverse engineer what you can about the site, from the site interface and any available information that you can find on the Internet or elsewhere.
+
+Include specific recommendations about how to improve the site's recommendation capabilities going forward. 
+
+Create your report using an R Markdown file, and create a discussion thread with a link to the GitHub repo where your Markdown file notebook resides.
+
+# GlassesUSA.com
+
+GlassesUSA.com uses a self-training deep learning system AdaptML by Dynamic Yield to adapt its recommendations to each shopper.
+
+## Who are your target users?
+
+Target users are eyeglass shoppers. 
+
+## What are their key goals?
+
+Key goals are recommending products predicted to drive engagement and ultimately to increase add-to-cart rate, purchases, and revenue.
+
+## How can you help them accomplish those goals?
+
+We could not only recommend glasses based on browsing and in-session action, but also use deep learning to recommend best fitting / most flattering glasses based on an uploaded photo of the user. 
+
+## What functionality should we offer?
+
+In addition to recommending products for the user, it would be useful to recommend products for GlassesUSA.com as well.  This could possibly help them design frames for their in house brands.
+
+## What user goals should we serve?
+
+We should serve a user goal of not only saving time choosing glasses, but also customer satisfaction by finding flattering glasses that match their feautures.
+
+## Reverse Engineer GlassesUSA.com uses a self-training deep learning system:
+
+Dynamic Yield learns the products in a user’s browsing history, in-session activity as well as trends seen across the site to recommend products they are predicted to engage with as they shop. This is done through item2vec, the learning model derived directly from its NLP counterpart, word2vec.
+
+The AdaptML algorithm is modeled off the entire product catalog. It is self-learning and recommendation results are continuously optimized. Optimal strategy set up is automatically determined and pre-configured based on site trends, user behavior, and customer journey location.
+
+Even on the first session, the user sees a homepage recommendation widget displaying six, personalized product suggestions using the deep learning algorithm.
+
+In addition to their homepage recommendation widget,GlassesUSA.com also employs targeted ads on social media.
+
+Currently GlassesUSA.com also allows a user to upload a photo of themselves to virtually try-on frames.
+
+## References:
+
+https://www.dynamicyield.com/files/case-studies/glasses-usa-dy-case-study.pdf
+
+https://www.dynamicyield.com/blog/deep-learning-recommendation-system/
